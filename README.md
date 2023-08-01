@@ -7,6 +7,13 @@ It is opinionated and supports the most basic common use-case: A website with
 one or more DNS names. Anything more complex than that is better handled by
 other tools.
 
+Installation
+------------
+Just install from PyPI:
+```
+$ pip install gencsr
+```
+
 Usage
 -----
 The hostname is always included in the list of DNS names (Subject Alternative
@@ -28,5 +35,5 @@ dns_names = [
 ```
 
 ```console
-$ gencsr --confg example.com.toml
+$ gencsr --config example.com.toml
 ```
