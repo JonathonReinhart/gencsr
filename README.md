@@ -1,4 +1,5 @@
 gencsr
+[![PyPI](https://img.shields.io/pypi/v/gencsr.svg)](https://pypi.python.org/pypi/gencsr)
 ======
 `gencsr` is a simple tool to generate an x.509 Certificate Signing Request
 (CSR).
