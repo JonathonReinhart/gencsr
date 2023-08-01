@@ -19,6 +19,7 @@
 from __future__ import annotations
 import argparse
 from dataclasses import dataclass
+import importlib.metadata
 from pathlib import Path
 from typing import Any
 import toml
@@ -99,8 +100,16 @@ class Config:
     def csr_path(self) -> Path:
         return Path(self.hostname + ".csr")
 
+def get_version() -> str:
+    try:
+        return importlib.metadata.version("gencsr")
+    except importlib.metadata.PackageNotFoundError:
+        return "???"
+
 def parse_args() -> Config:
     parser = argparse.ArgumentParser()
+    parser.add_argument("-v", "--version", action="version",
+            version="gencsr v" + get_version())
 
     parser.add_argument("--config", type=Path)
 
