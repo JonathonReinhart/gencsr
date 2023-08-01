@@ -99,14 +99,31 @@ class Config:
     def csr_path(self) -> Path:
         return Path(self.hostname + ".csr")
 
-def parse_args() -> argparse.Namespace:
+def parse_args() -> Config:
     parser = argparse.ArgumentParser()
-    parser.add_argument("config", type=Path)
-    return parser.parse_args()
+
+    parser.add_argument("--config", type=Path)
+
+    parser.add_argument("--hostname")
+    parser.add_argument("--dns-name", action="append", default=[])
+
+    args = parser.parse_args()
+
+    if args.config:
+        if args.hostname or args.dns_name:
+            parser.error("--config cannot be used with other options")
+        return Config.load(args.config)
+
+    if not args.hostname:
+        parser.error("--hostname required (if --config is not used)")
+
+    return Config(
+        hostname = args.hostname,
+        _dns_names = args.dns_name,
+    )
 
 def main():
-    args = parse_args()
-    cfg = Config.load(args.config)
+    cfg = parse_args()
 
     key = generate_key(cfg)
     write_key(key, cfg.key_path)
