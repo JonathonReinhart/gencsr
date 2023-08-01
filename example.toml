@@ -1,5 +1,4 @@
 hostname = "example.com"
 dns_names = [
-    "example.com",
     "www.example.com",
 ]

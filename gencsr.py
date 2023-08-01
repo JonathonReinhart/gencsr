@@ -67,7 +67,7 @@ def write_csr(csr, outpath: Path) -> None:
 @dataclass
 class Config:
     hostname: str
-    dns_names: list[str]
+    _dns_names: list[str]
 
     @classmethod
     def load(cls, path: Path) -> Config:
@@ -76,8 +76,12 @@ class Config:
 
         return cls(
             hostname = data["hostname"],
-            dns_names = data.get("dns_names") or [data["hostname"]],
+            _dns_names = data.get("dns_names", []),
         )
+
+    @property
+    def dns_names(self) -> list[str]:
+        return [self.hostname, *self._dns_names]
 
     @property
     def key_size(self) -> int:
